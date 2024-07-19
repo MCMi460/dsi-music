@@ -9,7 +9,7 @@ def ask(query:str):
     return answers.index(input(query).lower())
 
 if __name__ == '__main__':
-    match ask('(S)potify or (A)pple Music?\n> '):
+    match ask('(S)potify, (A)pple Music, or (M)anual?\n> '):
         case 0:
             from music.sfy import sfy
             playlist = sfy.playlist(input('Playlist link\n> '))
@@ -22,5 +22,13 @@ if __name__ == '__main__':
             + 'Type \'exit\' right now to end the '
             + 'script if this is not desired.\n> '
             ).lower() != 'exit'
+        case 2:
+            print('Downloading track of user choice...')
+            music.ytm.track(music.Track(
+                name = input('Name: '),
+                artist = input('Artist: '),
+                album = input('Album: ')
+            ))
+            quit()
     print('Playlist indexed. Backing playlist via Youtube Music.')
     music.ytm.playlist(playlist)
