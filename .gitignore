@@ -1,0 +1,4 @@
+*.log
+.cache
+secrets.py
+__pycache__/
