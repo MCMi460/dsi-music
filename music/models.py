@@ -10,7 +10,7 @@ class Track:
 @dataclass
 class Playlist:
     name:str
-    creator:str
+    creator:str = ''
     tracks:List[Track] = field(
         default_factory = lambda: []
     )

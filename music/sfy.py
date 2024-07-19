@@ -1,6 +1,11 @@
 from spotipy import Spotify
 from spotipy.oauth2 import SpotifyClientCredentials
-from .secrets import client_id, client_secret
+try:
+    from .secrets import client_id, client_secret
+except (ModuleNotFoundError, ImportError):
+    raise FileNotFoundError('spotify playlists require'
+    + ' a valid client id and secret in secrets.py.'
+    + ' See https://developer.spotify.com/')
 from requests import get
 from re import findall
 from .models import Track, Playlist
