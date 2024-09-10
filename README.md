@@ -1,5 +1,5 @@
 # DSi Music
-*Export songs from Spotify or Apple Music to your DSi automatically.*
+*Export songs from Spotify, Apple Music, or YouTube Music to your DSi automatically.*
 
 ## Running the app
 [Install Python](https://www.python.org/downloads/) and download the required modules by running the following command in the repository's directory:  
@@ -18,5 +18,5 @@ client_secret = '[your client secret]'
 ### Apple Music
 Apple Music requires a Mac. Open the Music app and start playing a song in your targeted playlist to export to the DSi. Then, run the app.
 
-### Youtube Music
-> Support to be added in the future.
+### YouTube Music
+YouTube Music offers an "indirect" track matching service. If enabled, the app will attempt to find the official music source uploaded to YouTube Music from keywords found in the linked video/playlist. It is not perfect, however, and like all other options, it may download incorrect tracks.
