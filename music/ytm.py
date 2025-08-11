@@ -8,13 +8,15 @@ from re import findall
 yt = YTMusic()
 
 opts = {
-    "format": "bestaudio[ext=m4a]/best",
+    "format": "m4a/bestaudio/best",
     "postprocessors": [
+        {"key": "FFmpegExtractAudio", "preferredcodec": "m4a"},
         {"key": "FFmpegMetadata", "add_metadata": True},
         {"key": "EmbedThumbnail"},
     ],
     "writethumbnail": True,
     "ignoreerrors": True,
+    "keepvideo": False,
 }
 
 
