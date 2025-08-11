@@ -1,30 +1,32 @@
 from .models import Track, Playlist
 from sys import platform
 from subprocess import run
-assert platform == 'darwin'
+
+assert platform == "darwin"
+
 
 class apm:
-    def _run(script:str):
-        return run(
-            [
-                'osascript',
-                '-e',
-                script
-            ],
-            capture_output = True
-        ).stdout.decode('utf-8').strip()
+    def _run(script: str):
+        return (
+            run(["osascript", "-e", script], capture_output=True)
+            .stdout.decode("utf-8")
+            .strip()
+        )
 
     def playlist():
         playlist = Playlist(
-            name = apm._run("""
+            name=apm._run(
+                """
                 tell application "Music"
                     set exported to container of item 1 of selection
                     return name of exported
                 end tell
-            """)
+            """
+            )
         )
 
-        tracks = apm._run("""
+        tracks = apm._run(
+            """
             set text item delimiters to "⎋"
             set exportedNames to {}
             tell application "Music"
@@ -35,13 +37,12 @@ class apm:
                 end repeat
             end tell
             return exportedNames as text
-        """).split('⎋')
+        """
+        ).split("⎋")
 
         for i in range(0, len(tracks), 3):
-            playlist.tracks.append(Track(
-                name = tracks[i],
-                artist = tracks[i+1],
-                album = tracks[i+2]
-            ))
+            playlist.tracks.append(
+                Track(name=tracks[i], artist=tracks[i + 1], album=tracks[i + 2])
+            )
 
         return playlist
