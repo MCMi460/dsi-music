@@ -1,7 +1,7 @@
 from ytmusicapi import YTMusic
 from .models import Track, Playlist
 from yt_dlp import YoutubeDL
-from os.path import exists
+from os.path import exists, join, abspath
 from os import makedirs
 from re import findall
 
@@ -27,7 +27,7 @@ class ytm:
 
         if not exists(folder):
             makedirs(folder)
-        opts["outtmpl"] = f"{folder}/%(title)s.%(ext)s"
+        opts["outtmpl"] = join(folder, r"%(title)s.%(ext)s")
 
         with YoutubeDL(opts) as ydl:
             ydl.download(id)
@@ -36,17 +36,18 @@ class ytm:
 
     def playlist(playlist: Playlist):
         for track in playlist.tracks:
-            ytm.track(track, folder=f"export/{playlist.name}")
+            ytm.track(track, folder=join("export", playlist.name))
 
     def download(url: str, *, indirect: bool = False, folder: str = "export"):
         playlist_id = findall(r"list=([^&#]*)", url)
         if len(playlist_id) > 0:
             title = yt.get_playlist(playlist_id[0], limit=0)["title"]
-            folder += f"/{title}"
+            folder = abspath(join(folder, title))
 
         if not exists(folder):
             makedirs(folder)
-        opts["outtmpl"] = f"{folder}/%(title)s.%(ext)s"
+        opts["outtmpl"] = join(folder, r"%(title)s.%(ext)s")
+        opts["download_archive"] = join(folder, "downloads.txt")
 
         with YoutubeDL(opts) as ydl:
             item = ydl.extract_info(url, download=not indirect)
